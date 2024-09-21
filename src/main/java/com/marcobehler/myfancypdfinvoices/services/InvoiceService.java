@@ -2,7 +2,6 @@ package com.marcobehler.myfancypdfinvoices.services;
 
 import com.marcobehler.myfancypdfinvoices.model.Invoice;
 import com.marcobehler.myfancypdfinvoices.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,6 +13,10 @@ public class InvoiceService {
     private List<Invoice> invoices = new CopyOnWriteArrayList<>();
 
     private UserService userService;
+
+    public InvoiceService(UserService userService) {
+        this.userService = userService;
+    }
 
     public List<Invoice> findAll() {
         return invoices;
@@ -30,10 +33,5 @@ public class InvoiceService {
         Invoice invoice = new Invoice(userId, amount, "http://www.africau.edu/images/default/sample.pdf");
         invoices.add(invoice);
         return invoice;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
     }
 }
