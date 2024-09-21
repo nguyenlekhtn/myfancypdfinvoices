@@ -2,6 +2,8 @@ package com.marcobehler.myfancypdfinvoices.services;
 
 import com.marcobehler.myfancypdfinvoices.model.Invoice;
 import com.marcobehler.myfancypdfinvoices.model.User;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -33,5 +35,15 @@ public class InvoiceService {
         Invoice invoice = new Invoice(userId, amount, "http://www.africau.edu/images/default/sample.pdf");
         invoices.add(invoice);
         return invoice;
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("Fetching PDF Template from S3...");
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        System.out.println("Deleting downloaded templates");
     }
 }
