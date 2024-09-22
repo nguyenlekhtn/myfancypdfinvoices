@@ -3,7 +3,6 @@ package com.marcobehler.myfancypdfinvoices.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marcobehler.myfancypdfinvoices.context.MyFancyPdfInvoicesApplicationConfiguration;
 import com.marcobehler.myfancypdfinvoices.model.Invoice;
-
 import com.marcobehler.myfancypdfinvoices.services.InvoiceService;
 import com.marcobehler.myfancypdfinvoices.services.UserService;
 import jakarta.servlet.ServletException;
@@ -25,6 +24,9 @@ public class MyFancyPdfInvoicesServlet extends HttpServlet {
     public void init() throws ServletException {
         AnnotationConfigApplicationContext ctx
                 = new AnnotationConfigApplicationContext(MyFancyPdfInvoicesApplicationConfiguration.class);
+
+        ctx.registerShutdownHook();
+
         this.userService = ctx.getBean(UserService.class);
         this.objectMapper = ctx.getBean(ObjectMapper.class);
         this.invoiceService = ctx.getBean(InvoiceService.class);}
